@@ -1,15 +1,5 @@
 import mysql.connector 
-import Carrera
-
-#Ajustar
-"""
-db = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="root",
-    database="universidad"
-)
-"""
+from Carrera import Carrera
 
 def validar_numero(mensaje, minimo=None, maximo=None):
     while True:
@@ -23,14 +13,29 @@ def validar_numero(mensaje, minimo=None, maximo=None):
         except ValueError:
             print("Error: introduzca un número válido.")
 
-def salir():
+def crear_db(host, user, pwd, db):
+    mydb = mysql.connector.connect(
+        host= host,
+        user= user,
+        password= pwd,
+        database= db
+    )
+
+    return mydb
+
+def salir(db, cursor):
     print("Que pase una buena tarde.")
+    cursor.close()
+    db.close()
     exit()
 
 def menu():
+    db = crear_db("localhost", "root", "123456", "moha_haroon")
+    cursor = db.cursor()
+    carrera = Carrera(db, cursor)
     opciones = {
-        1: Carrera.menu_carrera,
-        0: salir
+        1: carrera.menu,
+        0: lambda: salir(db, cursor)
     }
     while True:
         opcion = validar_numero(
@@ -41,5 +46,5 @@ def menu():
         accion = opciones.get(opcion)
         accion()
 
+
 menu()
-print("Salí")

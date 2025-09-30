@@ -1,0 +1,7 @@
+# Carpetas de cache
+__pycache__/
+*.pyc
+node_modules/
+*.log
+*.tmp
+.vscode/
