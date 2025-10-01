@@ -17,7 +17,7 @@ class Carrera:
 
     def actualizar_carrera(self):
         self.mostrar_carreras()
-        id_carrera = int(input("Ingrese el ID de la carrera a actualizar: "))
+        id_carrera = utils.validar_numero("Ingrese el ID de la carrera a actualizar: ")
         nuevo_nombre = input("Ingrese el nuevo nombre de la carrera: ")
 
         sql = "UPDATE carrera SET nombre = %s WHERE idcarrera = %s"
