@@ -1,3 +1,5 @@
+import mysql.connector 
+
 def validar_numero(mensaje, minimo=None, maximo=None):
     while True:
         try:

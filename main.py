@@ -1,5 +1,5 @@
 import mysql.connector 
-from Carreras import Carrera
+from DAOCarreras import DAOCarrera
 import utils
 
 
@@ -13,19 +13,19 @@ def crear_db(host, user, pwd, db):
 
     return mydb
 
-def salir(db, cursor):
+def salir(db):
     print("Que pase una buena tarde.")
-    cursor.close()
     db.close()
     exit()
 
 def menu():
-    db = crear_db("localhost", "root", "123456", "moha_haroon")
-    cursor = db.cursor()
-    carrera = Carrera(db, cursor)
+    user = input("Introduzca su nombre de usuario:")
+    pwd = input("Introduzca su contraseña:")
+    db = crear_db("localhost", user, pwd, "moha_haroon")
+    carrera = DAOCarrera(db)
     opciones = {
         1: carrera.menu,
-        0: lambda: salir(db, cursor)
+        0: lambda: salir(db)
     }
     while True:
         opcion = utils.validar_numero(

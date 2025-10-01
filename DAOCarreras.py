@@ -1,0 +1,83 @@
+import mysql.connector 
+from Carreras import Carrera
+import utils
+
+class DAOCarrera: 
+    def  __init__(self, db, cursor):
+        self.__db = db
+
+    def crear_carrera(self):
+        cursor = self.__db.cursor()
+        nombre = input("Ingrese el nombre de la carrera: ")
+        sql = "INSERT INTO carrera (nombre) VALUES (%s)"
+        cursor.execute(sql, (nombre,))
+        self.__db.commit()
+        if self.__cursor.rowcount == 0:
+            print("No se ha podido crear")
+        else:
+            print(f"Carrera creada: {nombre}")
+        cursor.close()
+
+    def actualizar_carrera(self):
+        cursor = self.__db.cursor()
+        self.mostrar_carreras()
+        id_carrera = utils.validar_numero("Ingrese el ID de la carrera a actualizar: ")
+        nuevo_nombre = input("Ingrese el nuevo nombre de la carrera: ")
+
+        sql = "UPDATE carrera SET nombre = %s WHERE idcarrera = %s"
+        self.__cursor.execute(sql, (nuevo_nombre, id_carrera))
+        self.__db.commit()
+        if self.__cursor.rowcount == 0:
+            print("No se ha podido actualizar")
+        else:
+            print(f"Carrera con ID {id_carrera} actualizada a: {nuevo_nombre}")
+        cursor.close()
+
+    def eliminar_carrera(self):
+        cursor = self.__db.cursor()
+        self.mostrar_carreras()
+        id_carrera = utils.validar_numero("Ingrese el ID de la carrera a eliminar: ")
+
+        sql = "DELETE FROM carrera WHERE idcarrera = %s"
+        self.__cursor.execute(sql, (id_carrera,))
+        self.__db.commit()
+        if self.__cursor.rowcount == 0:
+            print("No se ha podido eliminar")
+        else:
+            print(f"Carrera con ID {id_carrera} eliminada.")
+        cursor.close()
+
+    def mostrar_carreras(self):
+        cursor = self.__db.cursor()
+        sql = "SELECT * FROM carrera"
+        self.__cursor.execute(sql)
+        carreras = self.__cursor.fetchall()
+
+        if carreras:
+            print("\nCarreras registradas:")
+            print("   ID - Nombre")
+            for id_carrera, nombre in carreras:
+                print(f"   {id_carrera} - {nombre}")
+        else:
+            print("No hay carreras registradas.")
+        cursor.close()
+
+    def menu(self):
+        opciones = {
+            1: self.crear_carrera,
+            2: self.actualizar_carrera,
+            3: self.eliminar_carrera,
+            4: self.mostrar_carreras
+        }
+        while True:
+            opcion = utils.validar_numero(
+                "Seleccione una Opcion:\n"\
+                "   1.- Crear Carrera.\n"\
+                "   2.- Actualizar Carrera.\n"\
+                "   3.- Eliminar Carrera.\n"\
+                "   4.- Mostrar Carreras Disponibles.\n"\
+                "   0.- Volver.\n",
+                0,4)
+            if opcion == 0: return 
+            accion = opciones.get(opcion)
+            accion()
