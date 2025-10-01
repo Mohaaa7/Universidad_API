@@ -14,25 +14,25 @@ class Carrera:
 
     def actualizar_carrera(self):
         self.mostrar_carreras()
-        id_carrera = input("Ingrese el ID de la carrera a actualizar: ")
+        id_carrera = int(input("Ingrese el ID de la carrera a actualizar: "))
         nuevo_nombre = input("Ingrese el nuevo nombre de la carrera: ")
 
-        sql = "UPDATE carrera SET nombre = %s WHERE id = %s"
+        sql = "UPDATE carrera SET nombre = %s WHERE idcarrera = %s"
         self.__cursor.execute(sql, (nuevo_nombre, id_carrera))
         self.__db.commit()
         print(f"Carrera con ID {id_carrera} actualizada a: {nuevo_nombre}")
 
     def eliminar_carrera(self):
         self.mostrar_carreras()
-        id_carrera = input("Ingrese el ID de la carrera a eliminar: ")
+        id_carrera = int(input("Ingrese el ID de la carrera a eliminar: "))
 
-        sql = "DELETE FROM carrera WHERE id = %s"
+        sql = "DELETE FROM carrera WHERE idcarrera = %s"
         self.__cursor.execute(sql, (id_carrera,))
         self.__db.commit()
         print(f"Carrera con ID {id_carrera} eliminada.")
 
     def mostrar_carreras(self):
-        sql = "SELECT id, nombre FROM carrera"
+        sql = "SELECT * FROM carrera"
         self.__cursor.execute(sql)
         carreras = self.__cursor.fetchall()
 
@@ -45,7 +45,6 @@ class Carrera:
 
 
     def menu(self):
-        from main import validar_numero
         opciones = {
             1: self.crear_carrera,
             2: self.actualizar_carrera,
