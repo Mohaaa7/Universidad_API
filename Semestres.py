@@ -13,4 +13,19 @@ class Semestre:
         self.__db.commit()
         print(f"Semestre creado: {nombre}")
 
-    
+    def actualizar_semestre(self):
+        self.mostrar_semestres()
+        id_semestre = utils.validar_numero("Ingrese el ID del semestre a actualizar: ")
+        nuevo_nombre = input("Ingrese el nuevo nombre del semestre: ")
+        nuevo_id_carrera = utils.validar_numero("Ingrese el nuevo id de la carrera: ")
+
+        sql = "UPDATE semestre SET nombre = %s, idcarrera = %s WHERE idsemestre = %s"
+        self.__cursor.execute(sql, (nuevo_nombre, nuevo_id_carrera, id_semestre))
+        self.__db.commit()
+        if self.__cursor.rowcount == 0:
+            print("No se ha podido actualizar")
+        else:
+            print(f"Semestre con ID {id_semestre} actualizada")
+
+    def mostrar_semestres():
+        pass
