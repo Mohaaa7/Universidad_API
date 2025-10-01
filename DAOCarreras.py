@@ -3,81 +3,40 @@ from Carreras import Carrera
 import utils
 
 class DAOCarrera: 
-    def  __init__(self, db, cursor):
+    def  __init__(self, db):
         self.__db = db
 
-    def crear_carrera(self):
+    def crear_carrera(self, carrera):
         cursor = self.__db.cursor()
-        nombre = input("Ingrese el nombre de la carrera: ")
         sql = "INSERT INTO carrera (nombre) VALUES (%s)"
-        cursor.execute(sql, (nombre,))
+        cursor.execute(sql, (carrera.get_nombre(),))
         self.__db.commit()
-        if self.__cursor.rowcount == 0:
-            print("No se ha podido crear")
-        else:
-            print(f"Carrera creada: {nombre}")
+        filas_modificadas = cursor.rowcount
         cursor.close()
+        return filas_modificadas
 
-    def actualizar_carrera(self):
+    def actualizar_carrera(self, carrera):
         cursor = self.__db.cursor()
-        self.mostrar_carreras()
-        id_carrera = utils.validar_numero("Ingrese el ID de la carrera a actualizar: ")
-        nuevo_nombre = input("Ingrese el nuevo nombre de la carrera: ")
-
         sql = "UPDATE carrera SET nombre = %s WHERE idcarrera = %s"
-        self.__cursor.execute(sql, (nuevo_nombre, id_carrera))
+        cursor.execute(sql, (carrera.get_nombre(), carrera.get_id()))
         self.__db.commit()
-        if self.__cursor.rowcount == 0:
-            print("No se ha podido actualizar")
-        else:
-            print(f"Carrera con ID {id_carrera} actualizada a: {nuevo_nombre}")
+        filas_modificadas = cursor.rowcount
         cursor.close()
+        return filas_modificadas
 
-    def eliminar_carrera(self):
+    def eliminar_carrera(self,carrera):
         cursor = self.__db.cursor()
-        self.mostrar_carreras()
-        id_carrera = utils.validar_numero("Ingrese el ID de la carrera a eliminar: ")
-
-        sql = "DELETE FROM carrera WHERE idcarrera = %s"
-        self.__cursor.execute(sql, (id_carrera,))
+        sql = "DELETE * FROM carrera WHERE idcarrera = %s"
+        cursor.execute(sql, (carrera.get_id(),))
         self.__db.commit()
-        if self.__cursor.rowcount == 0:
-            print("No se ha podido eliminar")
-        else:
-            print(f"Carrera con ID {id_carrera} eliminada.")
+        filas_modificadas = cursor.rowcount
         cursor.close()
+        return filas_modificadas
 
     def mostrar_carreras(self):
         cursor = self.__db.cursor()
         sql = "SELECT * FROM carrera"
-        self.__cursor.execute(sql)
-        carreras = self.__cursor.fetchall()
-
-        if carreras:
-            print("\nCarreras registradas:")
-            print("   ID - Nombre")
-            for id_carrera, nombre in carreras:
-                print(f"   {id_carrera} - {nombre}")
-        else:
-            print("No hay carreras registradas.")
+        cursor.execute(sql)
+        carreras = cursor.fetchall()
         cursor.close()
-
-    def menu(self):
-        opciones = {
-            1: self.crear_carrera,
-            2: self.actualizar_carrera,
-            3: self.eliminar_carrera,
-            4: self.mostrar_carreras
-        }
-        while True:
-            opcion = utils.validar_numero(
-                "Seleccione una Opcion:\n"\
-                "   1.- Crear Carrera.\n"\
-                "   2.- Actualizar Carrera.\n"\
-                "   3.- Eliminar Carrera.\n"\
-                "   4.- Mostrar Carreras Disponibles.\n"\
-                "   0.- Volver.\n",
-                0,4)
-            if opcion == 0: return 
-            accion = opciones.get(opcion)
-            accion()
+        return carreras

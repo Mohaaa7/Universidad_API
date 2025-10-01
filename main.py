@@ -1,4 +1,5 @@
 import mysql.connector 
+import menuCarrera
 from DAOCarreras import DAOCarrera
 import utils
 
@@ -19,12 +20,11 @@ def salir(db):
     exit()
 
 def menu():
-    user = input("Introduzca su nombre de usuario:")
-    pwd = input("Introduzca su contraseña:")
+    user = input("Introduzca su nombre de usuario: ")
+    pwd = input("Introduzca su contraseña: ")
     db = crear_db("localhost", user, pwd, "moha_haroon")
-    carrera = DAOCarrera(db)
     opciones = {
-        1: carrera.menu,
+        1: lambda:menuCarrera.menu(db),
         0: lambda: salir(db)
     }
     while True:
@@ -35,6 +35,5 @@ def menu():
             0,len(opciones)-1)
         accion = opciones.get(opcion)
         accion()
-
 
 menu()
