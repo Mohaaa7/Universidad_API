@@ -51,3 +51,30 @@ class Semestre:
                 print(f"   {idSemestre} - {nombre}")
         else:
             print("No hay semestres registrados.")
+
+    def menu(self):
+        opciones = {
+            1: self.crear_semestre,
+            2: self.actualizar_semestre,
+            3: self.eliminar_semestre,
+            4: self.mostrar_semestres
+        }
+        while True:
+            opcion = utils.validar_numero(
+                "Seleccione una Opcion:\n"\
+                "   1.- Crear Semestre.\n"\
+                "   2.- Actualizar Semestre.\n"\
+                "   3.- Eliminar Semestre.\n"\
+                "   4.- Mostrar Semestres Disponibles.\n"\
+                "   0.- Volver.\n",
+                0,4)
+            if opcion == 0: return 
+            accion = opciones.get(opcion)
+            accion()
+
+
+
+
+
+
+            
