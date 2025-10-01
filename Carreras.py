@@ -1,4 +1,4 @@
-from main import validar_numero
+import utils
 
 class Carrera: 
     def  __init__(self, db, cursor):
@@ -30,7 +30,7 @@ class Carrera:
             4: self.mostrar_carreras
         }
         while True:
-            opcion = self.validar_numero(
+            opcion = utils.validar_numero(
                 "Seleccione una Opcion:\n"\
                 "   1.- Crear Carrera.\n"\
                 "   2.- Actualizar Carrera.\n"\

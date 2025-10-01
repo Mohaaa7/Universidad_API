@@ -1,17 +1,7 @@
 import mysql.connector 
-from Carrera import Carrera
+from Carreras import Carrera
+import utils
 
-def validar_numero(mensaje, minimo=None, maximo=None):
-    while True:
-        try:
-            valor = int(input(mensaje))
-            if minimo is not None and maximo is not None:
-                if not (minimo <= valor <= maximo):
-                    print("La opción marcada no esta dentro del rango de opciones disponibles")
-                    continue
-            return valor
-        except ValueError:
-            print("Error: introduzca un número válido.")
 
 def crear_db(host, user, pwd, db):
     mydb = mysql.connector.connect(
@@ -38,7 +28,7 @@ def menu():
         0: lambda: salir(db, cursor)
     }
     while True:
-        opcion = validar_numero(
+        opcion = utils.validar_numero(
             "Seleccione una Opcion:\n"\
             "   1.- Gestionar Carreras.\n"\
             "   0.- Salir.\n",
