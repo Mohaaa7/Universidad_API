@@ -7,36 +7,28 @@ class DAOCarrera:
         self.__db = db
 
     def crear_carrera(self, carrera):
-        cursor = self.__db.cursor()
-        sql = "INSERT INTO carrera (nombre) VALUES (%s)"
-        cursor.execute(sql, (carrera.get_nombre(),))
-        self.__db.commit()
-        filas_modificadas = cursor.rowcount
-        cursor.close()
-        return filas_modificadas
+        with self.__db.cursor() as cursor:
+            sql = "INSERT INTO carrera (nombre) VALUES (%s)"
+            cursor.execute(sql, (carrera.get_nombre(),))
+            self.__db.commit()
+            return cursor.rowcount
 
     def actualizar_carrera(self, carrera):
-        cursor = self.__db.cursor()
-        sql = "UPDATE carrera SET nombre = %s WHERE idcarrera = %s"
-        cursor.execute(sql, (carrera.get_nombre(), carrera.get_id()))
-        self.__db.commit()
-        filas_modificadas = cursor.rowcount
-        cursor.close()
-        return filas_modificadas
+        with self.__db.cursor() as cursor:
+            sql = "UPDATE carrera SET nombre = %s WHERE idcarrera = %s"
+            cursor.execute(sql, (carrera.get_nombre(), carrera.get_id()))
+            self.__db.commit()
+            return cursor.rowcount
 
     def eliminar_carrera(self,carrera):
-        cursor = self.__db.cursor()
-        sql = "DELETE * FROM carrera WHERE idcarrera = %s"
-        cursor.execute(sql, (carrera.get_id(),))
-        self.__db.commit()
-        filas_modificadas = cursor.rowcount
-        cursor.close()
-        return filas_modificadas
+        with self.__db.cursor() as cursor:
+            sql = "DELETE FROM carrera WHERE idcarrera = %s"
+            cursor.execute(sql, (carrera.get_id(),))
+            self.__db.commit()
+            return cursor.rowcount
 
     def mostrar_carreras(self):
-        cursor = self.__db.cursor()
-        sql = "SELECT * FROM carrera"
-        cursor.execute(sql)
-        carreras = cursor.fetchall()
-        cursor.close()
-        return carreras
+        with self.__db.cursor() as cursor:
+            sql = "SELECT * FROM carrera"
+            cursor.execute(sql)
+            return cursor.fetchall()
