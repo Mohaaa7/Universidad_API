@@ -6,27 +6,28 @@ class Semestre:
         self.__id_carrera = id_carrera
 
     # Getters
-    def get_id_semestre(self):
+    def getIdSemestre(self):
         return self.__id_semestre
 
-    def get_nombre(self):
+    def getNombre(self):
         return self.__nombre
 
-    def get_id_carrera(self):
+    def getIdCarrera(self):
         return self.__id_carrera
 
     # Setters
-    def set_id_semestre(self, id_semestre):
+    def setIdSemestre(self, id_semestre):
         self.__id_semestre = id_semestre
 
-    def set_nombre(self, nombre):
+    def setNombre(self, nombre):
         self.__nombre = nombre
 
-    def set_id_carrera(self, id_carrera):
+    def setIdCarrera(self, id_carrera):
         self.__id_carrera = id_carrera
 
 
     def __str__(self):
         return f"Semestre {self.__id_semestre}, {self.__nombre}, {self.__id_carrera}"
+
 
 
