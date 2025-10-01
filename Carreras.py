@@ -10,7 +10,10 @@ class Carrera:
         sql = "INSERT INTO carrera (nombre) VALUES (%s)"
         self.__cursor.execute(sql, (nombre,))
         self.__db.commit()
-        print(f"Carrera creada: {nombre}")
+        if self.__cursor.rowcount == 0:
+            print("No se ha podido crear")
+        else:
+            print(f"Carrera creada: {nombre}")
 
     def actualizar_carrera(self):
         self.mostrar_carreras()
@@ -20,16 +23,22 @@ class Carrera:
         sql = "UPDATE carrera SET nombre = %s WHERE idcarrera = %s"
         self.__cursor.execute(sql, (nuevo_nombre, id_carrera))
         self.__db.commit()
-        print(f"Carrera con ID {id_carrera} actualizada a: {nuevo_nombre}")
+        if self.__cursor.rowcount == 0:
+            print("No se ha podido actualizar")
+        else:
+            print(f"Carrera con ID {id_carrera} actualizada a: {nuevo_nombre}")
 
     def eliminar_carrera(self):
         self.mostrar_carreras()
-        id_carrera = int(input("Ingrese el ID de la carrera a eliminar: "))
+        id_carrera = utils.validar_numero("Ingrese el ID de la carrera a eliminar: ")
 
         sql = "DELETE FROM carrera WHERE idcarrera = %s"
         self.__cursor.execute(sql, (id_carrera,))
         self.__db.commit()
-        print(f"Carrera con ID {id_carrera} eliminada.")
+        if self.__cursor.rowcount == 0:
+            print("No se ha podido eliminar")
+        else:
+            print(f"Carrera con ID {id_carrera} eliminada.")
 
     def mostrar_carreras(self):
         sql = "SELECT * FROM carrera"
@@ -42,7 +51,6 @@ class Carrera:
                 print(f"   {id_carrera} - {nombre}")
         else:
             print("No hay carreras registradas.")
-
 
     def menu(self):
         opciones = {
