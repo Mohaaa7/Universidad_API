@@ -47,6 +47,7 @@ class Carrera:
 
         if carreras:
             print("\nCarreras registradas:")
+            print("   ID - Nombre")
             for id_carrera, nombre in carreras:
                 print(f"   {id_carrera} - {nombre}")
         else:
