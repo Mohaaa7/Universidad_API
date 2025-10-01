@@ -27,5 +27,27 @@ class Semestre:
         else:
             print(f"Semestre con ID {id_semestre} actualizada")
 
-    def mostrar_semestres():
-        pass
+    def eliminar_semestre(self):
+        self.mostrar_semestres()
+        id_semestre = utils.validar_numero("Ingrese el ID del semestre a eliminar: ")
+
+        sql = "DELETE FROM semestre WHERE idsemestre = %s"
+        self.__cursor.execute(sql, (id_semestre,))
+        self.__db.commit()
+        if self.__cursor.rowcount == 0:
+            print("No se ha podido eliminar")
+        else:
+            print(f"Semestre con ID {id_semestre} eliminada.")
+
+    def mostrar_semestres(self):
+        sql = "SELECT * FROM semestre"
+        self.__cursor.execute(sql)
+        semestres = self.__cursor.fetchall()
+
+        if semestres:
+            print("\Semestres registrados:")
+            print("   ID - Nombre")
+            for idSemestre, nombre in semestres:
+                print(f"   {idSemestre} - {nombre}")
+        else:
+            print("No hay semestres registrados.")
