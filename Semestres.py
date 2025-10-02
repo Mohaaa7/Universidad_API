@@ -1,5 +1,6 @@
 class Semestre:
 
+    #  Constructor
     def __init__(self, id_semestre, nombre, id_carrera):
         self.__id_semestre = id_semestre
         self.__nombre = nombre
@@ -25,9 +26,9 @@ class Semestre:
     def setIdCarrera(self, id_carrera):
         self.__id_carrera = id_carrera
 
-
+    # Str
     def __str__(self):
-        return f"Semestre {self.__id_semestre}, {self.__nombre}, {self.__id_carrera}"
+        return f"Semestre: {self.__id_semestre}, {self.__nombre}, {self.__id_carrera}"
 
 
 
