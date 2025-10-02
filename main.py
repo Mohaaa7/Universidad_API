@@ -1,6 +1,7 @@
 import mysql.connector 
 import menuCarrera
 import utils
+import menuSemestre
 
 def crear_db(host = "localhost", user = "root", pwd = "123456", db = "moha_haroon"):
     try:
@@ -39,6 +40,7 @@ def menu():
 
     opciones = {
         1: lambda: menuCarrera.menu(db),
+        2: lambda: menuSemestre.menu_semestre(db),
         0: lambda: salir(db)
     }
 
@@ -46,6 +48,7 @@ def menu():
         opcion = utils.validar_numero(
             "Seleccione una Opcion:\n"\
             "   1.- Gestionar Carreras.\n"\
+            "   2.- Gestionar Semestres.\n"
             "   0.- Salir.\n",
             0,len(opciones)-1)
         accion = opciones.get(opcion)
