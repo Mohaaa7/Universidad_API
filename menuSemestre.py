@@ -33,11 +33,19 @@ def crear_semestre(dao):
     mostrar_semestres(dao)
     
     nombre = input("Ingrese el nombre del semestre: ")
-    id_carrera = utils.validar_numero("Ingrese el ID de la carrera: ")
+
+    while True:
+        id_carrera = utils.validar_numero("Ingrese el ID de la carrera: ")
+        if dao.carrera_existe(id_carrera):
+            break
+        else:
+            print("El ID de carrera no es válido!")
+
     semestre = Semestre(0, nombre, id_carrera)
     rowcount = dao.crear_semestre(semestre)
     
     print(f"Semestre creado: {nombre}" if rowcount else "No se ha podido crear el semestre")
+
 
 # Método para actualizar semestres
 def actualizar_semestre(dao):
@@ -45,7 +53,14 @@ def actualizar_semestre(dao):
 
     id_semestre = utils.validar_numero("Ingrese el ID del semestre a actualizar: ")
     nuevo_nombre = input("Ingrese el nuevo nombre del semestre: ")
-    nuevo_id_carrera = utils.validar_numero("Ingrese el nuevo ID de la carrera: ")
+    
+    while True:
+        nuevo_id_carrera = utils.validar_numero("Ingrese el nuevo ID de la carrera: ")
+        if dao.carrera_existe(nuevo_id_carrera):
+            break
+        else:
+            print("El ID de carrera no es válido!")
+
     semestre = Semestre(id_semestre, nuevo_nombre, nuevo_id_carrera)
     rowcount = dao.actualizar_semestre(semestre)
 

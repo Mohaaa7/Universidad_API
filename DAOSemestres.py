@@ -14,6 +14,13 @@ class DAOSemestre:
             cursor.execute(sql, (semestre.getNombre(), semestre.getIdCarrera()))
             self.__db.commit()
             return cursor.rowcount
+        
+    # Método para validar si el id de la carrera existe
+    def carrera_existe(self, id_carrera):
+        with self.__db.cursor() as cursor:
+            cursor.execute("SELECT idcarrera FROM carrera")
+            ids_validos = [fila[0] for fila in cursor.fetchall()]
+        return id_carrera in ids_validos
 
     # Método para actualizar semestres
     def actualizar_semestre(self, semestre):
