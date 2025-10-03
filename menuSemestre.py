@@ -67,9 +67,9 @@ def mostrar_semestres(dao):
 
     if semestres:
         print("\nSemestres registrados:")
-        print("   ID - Nombre - ID Carrera")
-        for idSemestre, nombre, idCarrera in semestres:
-            print(f"   {idSemestre} - {nombre} - {idCarrera}")
+        print("   ID - Nombre - ID Carrera - Nombre Carrera")
+        for idSemestre, nombre, idCarrera, nombreCarrera  in semestres:
+            print(f"   {idSemestre} - {nombre} - {idCarrera} - {nombreCarrera}")
     else:
         print("No hay semestres registrados.")
 

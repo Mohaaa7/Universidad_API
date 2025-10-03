@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `moha_haroon` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `moha_haroon`;
 -- MySQL dump 10.13  Distrib 8.0.43, for Win64 (x86_64)
 --
 -- Host: localhost    Database: moha_haroon
@@ -18,28 +16,18 @@ USE `moha_haroon`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table ` carrera`
+-- Table structure for table `carrera`
 --
 
-DROP TABLE IF EXISTS ` carrera`;
+DROP TABLE IF EXISTS `carrera`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE ` carrera` (
+CREATE TABLE `carrera` (
   `idcarrera` int NOT NULL AUTO_INCREMENT,
   `nombre` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`idcarrera`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table ` carrera`
---
-
-LOCK TABLES ` carrera` WRITE;
-/*!40000 ALTER TABLE ` carrera` DISABLE KEYS */;
-INSERT INTO ` carrera` VALUES (1,'informatica'),(2,'matematicas');
-/*!40000 ALTER TABLE ` carrera` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `semestre`
@@ -54,19 +42,9 @@ CREATE TABLE `semestre` (
   `idcarrera` int DEFAULT NULL,
   PRIMARY KEY (`idsemestre`),
   KEY `idcarrera_idx` (`idcarrera`),
-  CONSTRAINT `idcarrera` FOREIGN KEY (`idcarrera`) REFERENCES ` carrera` (`idcarrera`)
+  CONSTRAINT `idcarrera` FOREIGN KEY (`idcarrera`) REFERENCES `carrera` (`idcarrera`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `semestre`
---
-
-LOCK TABLES `semestre` WRITE;
-/*!40000 ALTER TABLE `semestre` DISABLE KEYS */;
-INSERT INTO `semestre` VALUES (1,'Primer semestre',1),(2,'Segundo semestre',2);
-/*!40000 ALTER TABLE `semestre` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -77,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-10-03  9:58:43
+-- Dump completed on 2025-10-03 13:07:31

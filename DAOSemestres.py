@@ -34,7 +34,12 @@ class DAOSemestre:
     # Método para mostrar semestres
     def mostrar_semestres(self):
         with self.__db.cursor() as cursor:
-            sql = "SELECT * FROM semestre"
+            sql = """
+                SELECT s.idsemestre, s.nombre AS nombre_semestre, 
+                       c.idcarrera, c.nombre AS nombre_carrera
+                FROM semestre s
+                INNER JOIN carrera c ON s.idcarrera = c.idcarrera
+            """
             cursor.execute(sql)
             return cursor.fetchall()
 
