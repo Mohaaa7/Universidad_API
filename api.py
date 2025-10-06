@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request as req
 from DAOCarreras import DAOCarrera
 from db import crear_db
+from Carreras import Carrera
 
 app = Flask(__name__)
 
@@ -22,6 +23,19 @@ def get_carreras():
         result.append(carrera_dict)
 
     return jsonify(result)
+
+@app.route("/carreras", methods=["POST"])
+def create_carrera():
+    data = req.get_json()   
+    nombre = data.get("nombre") 
+    carrera = Carrera(0, nombre)
+    
+    rowcount = dao.crear_carrera(carrera)
+    
+    if rowcount:
+        return jsonify({"mensaje": "Carrera creada"}), 201
+    else:
+        return jsonify({"error": "No se pudo crear la carrera"}), 500
 
 
 # RUTAS DE SEMESTRES

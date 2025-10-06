@@ -2,6 +2,7 @@ import utils
 from Carreras import Carrera
 from DAOCarreras import DAOCarrera
 import requests
+from flask import jsonify
 
 API_URL = "http://127.0.0.1:5000"
 
@@ -27,11 +28,16 @@ def menu(db):
         accion()
 
 def crear_carrera(dao):
-    mostrar_carreras(dao)
+    mostrar_carreras()
     nombre = input("Ingrese el nombre de la carrera: ")
-    carrera = Carrera(0,nombre)
-    rowcount = dao.crear_carrera(carrera)
-    print(f"Carrera creada: {nombre}" if rowcount else "No se ha podido crear la carrera")
+    
+    url = f"{API_URL}/carreras"
+    r = requests.post(url, json={"nombre": nombre})
+    
+    if r.status_code == 201:
+        print(f"Carrera creada: {nombre}")
+    else:
+        print("No se ha podido crear la carrera")
 
 
 def actualizar_carrera(dao):
