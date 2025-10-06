@@ -1,7 +1,3 @@
-import mysql.connector 
-from Carreras import Carrera
-import utils
-
 class DAOCarrera: 
     def  __init__(self, db):
         self.__db = db
@@ -17,7 +13,7 @@ class DAOCarrera:
         with self.__db.cursor() as cursor:
             sql = "UPDATE carrera SET nombre = %s WHERE idcarrera = %s"
             cursor.execute(sql, (carrera.get_nombre(), carrera.get_id()))
-            self.__db.commit()
+            self.__db.commit()  
             return cursor.rowcount
 
     def eliminar_carrera(self,carrera):
@@ -32,3 +28,4 @@ class DAOCarrera:
             sql = "SELECT * FROM carrera"
             cursor.execute(sql)
             return cursor.fetchall()
+        

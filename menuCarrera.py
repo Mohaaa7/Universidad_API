@@ -1,6 +1,9 @@
 import utils
 from Carreras import Carrera
 from DAOCarreras import DAOCarrera
+import requests
+
+API_URL = "http://127.0.0.1:5000"
 
 def menu(db):
     dao = DAOCarrera(db)
@@ -8,7 +11,7 @@ def menu(db):
         1: lambda: crear_carrera(dao),
         2: lambda: actualizar_carrera(dao),
         3: lambda: eliminar_carrera(dao),
-        4: lambda: mostrar_carreras(dao)
+        4: lambda: mostrar_carreras()
     }
     while True:
         opcion = utils.validar_numero(
@@ -47,12 +50,19 @@ def eliminar_carrera(dao):
     rowcount = dao.eliminar_carrera(carrera)
     print(f"Carrera con ID {id} eliminada." if rowcount else "No se encontró ninguna carrera con ese ID")
 
-def mostrar_carreras(dao):
-    carreras = dao.mostrar_carreras()
-    if carreras:
-        print("\nCarreras registradas:")
-        print("   ID - Nombre")
-        for id_carrera, nombre in carreras:
-            print(f"   {id_carrera} - {nombre}")
+def mostrar_carreras():
+    url = f"{API_URL}/carreras"
+    r = requests.get(url)
+
+    if r.status_code == 200:
+        carreras = r.json()
+        if carreras:
+            print("\nCarreras registradas:")
+            print("ID - Nombre")
+            for carrera in carreras:
+                print(f"{carrera['id']} - {carrera['nombre']}")
+        else:
+            print("No hay carreras registradas.")
     else:
-        print("No hay carreras registradas.")
+        print("Error al consultar la API:", r.status_code)
+
