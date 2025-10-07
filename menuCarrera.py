@@ -11,7 +11,7 @@ def menu(db):
     opciones = {
         1: lambda: crear_carrera(),
         2: lambda: actualizar_carrera(),
-        3: lambda: eliminar_carrera(dao),
+        3: lambda: eliminar_carrera(),
         4: lambda: mostrar_carreras()
     }
     while True:
@@ -34,7 +34,7 @@ def crear_carrera():
     url = f"{API_URL}/carreras"
     r = requests.post(url, json={"nombre": nombre})
     
-    if r.status_code == 201:
+    if r.status_code == 200:
         print(f"Carrera creada: {nombre}")
     else:
         print("No se ha podido crear la carrera")
@@ -47,17 +47,22 @@ def actualizar_carrera():
     url = f"{API_URL}/carreras"
     r = requests.put(url, json={"id": id, "nombre": nombre})
 
-    if r.status_code == 201:
+    if r.status_code == 200:
         print(f"Carrera actualizada: {nombre}")
     else:
         print("No se ha podido actualizar la carrera")
 
-def eliminar_carrera(dao):
-    mostrar_carreras(dao)
+def eliminar_carrera():
+    mostrar_carreras()
     id = utils.validar_numero("Ingrese el ID de la carrera a eliminar: ")
-    carrera = Carrera(id)
-    rowcount = dao.eliminar_carrera(carrera)
-    print(f"Carrera con ID {id} eliminada." if rowcount else "No se encontró ninguna carrera con ese ID")
+
+    url = f"{API_URL}/carreras"
+    r = requests.delete(url, json={"id": id})
+
+    if r.status_code == 200:
+        print(f"Carrera eliminada")
+    else:
+        print("No se ha podido eliminar la carrera")
 
 def mostrar_carreras():
     url = f"{API_URL}/carreras"

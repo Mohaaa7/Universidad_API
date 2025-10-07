@@ -52,6 +52,19 @@ def update_carrera():
     else:
         return jsonify({"error": "No se pudo actualizar la carrera"}), 500
 
+@app.route("/carreras", methods=["DELETE"])
+def delete_carrera():
+    data = req.get_json()   
+    id = data.get("id") 
+
+    carrera = Carrera(id)
+    
+    rowcount = dao.eliminar_carrera(carrera)
+    
+    if rowcount:
+        return jsonify({"mensaje": "Carrera eliminada"}), 200
+    else:
+        return jsonify({"error": "No se pudo eliminar la carrera"}), 500
 
 # RUTAS DE SEMESTRES
 
