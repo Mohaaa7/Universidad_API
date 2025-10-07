@@ -8,6 +8,8 @@ app = Flask(__name__)
 db = iniciar_sesion()
 dao = DAOCarrera(db)
 
+app.run()
+
 # RUTAS DE CARRERAS
 @app.route("/carreras", methods=["GET"])
 def get_carreras():
