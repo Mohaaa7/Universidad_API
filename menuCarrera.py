@@ -9,8 +9,8 @@ API_URL = "http://127.0.0.1:5000"
 def menu(db):
     dao = DAOCarrera(db)
     opciones = {
-        1: lambda: crear_carrera(dao),
-        2: lambda: actualizar_carrera(dao),
+        1: lambda: crear_carrera(),
+        2: lambda: actualizar_carrera(),
         3: lambda: eliminar_carrera(dao),
         4: lambda: mostrar_carreras()
     }
@@ -27,7 +27,7 @@ def menu(db):
         accion = opciones.get(opcion)
         accion()
 
-def crear_carrera(dao):
+def crear_carrera():
     mostrar_carreras()
     nombre = input("Ingrese el nombre de la carrera: ")
     
@@ -39,15 +39,18 @@ def crear_carrera(dao):
     else:
         print("No se ha podido crear la carrera")
 
-
-def actualizar_carrera(dao):
-    mostrar_carreras(dao)
+def actualizar_carrera():
+    mostrar_carreras()
     id =  utils.validar_numero("Ingrese el ID de la carrera a actualizar: ")
     nombre = input("Ingrese el nuevo nombre de la carrera: ")
-    carrera = Carrera(id, nombre)
-    rowcount = dao.actualizar_carrera(carrera)
-    print(f"Carrera con ID {id} actualizada a: {nombre}" if rowcount else "No se ha podido actualizar la carrera")
 
+    url = f"{API_URL}/carreras"
+    r = requests.put(url, json={"id": id, "nombre": nombre})
+
+    if r.status_code == 201:
+        print(f"Carrera actualizada: {nombre}")
+    else:
+        print("No se ha podido actualizar la carrera")
 
 def eliminar_carrera(dao):
     mostrar_carreras(dao)

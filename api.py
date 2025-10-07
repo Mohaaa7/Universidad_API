@@ -33,9 +33,24 @@ def create_carrera():
     rowcount = dao.crear_carrera(carrera)
     
     if rowcount:
-        return jsonify({"mensaje": "Carrera creada"}), 201
+        return jsonify({"mensaje": "Carrera creada"}), 200
     else:
         return jsonify({"error": "No se pudo crear la carrera"}), 500
+    
+@app.route("/carreras", methods=["PUT"])
+def update_carrera():
+    data = req.get_json()   
+    id = data.get("id") 
+    nombre = data.get("nombre") 
+
+    carrera = Carrera(id, nombre)
+    
+    rowcount = dao.actualizar_carrera(carrera)
+    
+    if rowcount:
+        return jsonify({"mensaje": "Carrera actualizada"}), 200
+    else:
+        return jsonify({"error": "No se pudo actualizar la carrera"}), 500
 
 
 # RUTAS DE SEMESTRES
