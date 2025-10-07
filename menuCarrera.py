@@ -2,17 +2,16 @@ import utils
 from Carreras import Carrera
 from DAOCarreras import DAOCarrera
 import requests
-from flask import jsonify
 
 API_URL = "http://127.0.0.1:5000"
 
-def menu(db):
-    dao = DAOCarrera(db)
+def menu():
     opciones = {
         1: crear_carrera,
         2: actualizar_carrera,
         3: eliminar_carrera,
-        4: mostrar_carreras
+        4: mostrar_carreras,
+        5: mostrar_carrera
     }
     while True:
         opcion = utils.validar_numero(
@@ -21,8 +20,9 @@ def menu(db):
             "   2.- Actualizar Carrera.\n"\
             "   3.- Eliminar Carrera.\n"\
             "   4.- Mostrar Carreras Disponibles.\n"\
+            "   5.- Mostrar Carrera específica.\n"\
             "   0.- Volver.\n",
-            0,4)
+            0,5)
         if opcion == 0: return 
         accion = opciones.get(opcion)
         accion()
@@ -80,3 +80,19 @@ def mostrar_carreras():
     else:
         print("Error al consultar la API:", r.status_code)
 
+def mostrar_carrera():
+    id =  utils.validar_numero("Ingrese el ID de la carrera a mostrar: ")
+
+    url = f"{API_URL}/carrera/{id}"
+    r = requests.get(url)
+
+    if r.status_code == 200:
+        carrera = r.json()
+        if "error" in carrera:
+            print("No se ha encontrado la carrera.")
+        else:
+            print("\nCarrera encontrada:")
+            print("ID - Nombre")            
+            print(f"{carrera['id']} - {carrera['nombre']}")
+    else:
+        print("Error al consultar la API:", r.status_code)

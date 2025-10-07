@@ -12,7 +12,7 @@ def menu():
     db = iniciar_sesion()
 
     opciones = {
-        1: lambda: menuCarrera.menu(db),
+        1: lambda: menuCarrera.menu(),
         2: lambda: menuSemestre.menu_semestre(db),
         0: lambda: salir(db)
     }
