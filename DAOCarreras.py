@@ -8,14 +8,18 @@ class DAOCarrera:
             sql = "INSERT INTO carrera (nombre) VALUES (%s)"
             cursor.execute(sql, (carrera.get_nombre(),))
             self.__db.commit()
-            return cursor.rowcount
+            if not cursor.rowcount:
+                return None
+
+            carrera.set_id(cursor.lastrowid)
+            return carrera
 
     def actualizar_carrera(self, carrera):
         with self.__db.cursor() as cursor:
             sql = "UPDATE carrera SET nombre = %s WHERE idcarrera = %s"
             cursor.execute(sql, (carrera.get_nombre(), carrera.get_id()))
             self.__db.commit()  
-            return cursor.rowcount
+            return carrera if cursor.rowcount else None
 
     def eliminar_carrera(self,carrera):
         with self.__db.cursor() as cursor:
