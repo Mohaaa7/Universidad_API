@@ -11,3 +11,4 @@ def validar_numero(mensaje, minimo=None, maximo=None):
             return valor
         except ValueError:
             print("Error: introduzca un número válido.")
+

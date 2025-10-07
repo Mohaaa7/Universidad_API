@@ -23,7 +23,7 @@ class DAOCarrera:
             self.__db.commit()
             return cursor.rowcount
 
-    def mostrar_carreras(self):
+    def get_carreras(self):
         with self.__db.cursor() as cursor:
             sql = "SELECT * FROM carrera"
             cursor.execute(sql)

@@ -1,11 +1,11 @@
 from flask import Flask, jsonify, request as req
 from DAOCarreras import DAOCarrera
-from db import crear_db
+from db import iniciar_sesion
 from Carreras import Carrera
 
 app = Flask(__name__)
 
-db = crear_db()
+db = iniciar_sesion()
 dao = DAOCarrera(db)
 
 # RUTAS DE CARRERAS

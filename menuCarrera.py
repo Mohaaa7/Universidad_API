@@ -9,10 +9,10 @@ API_URL = "http://127.0.0.1:5000"
 def menu(db):
     dao = DAOCarrera(db)
     opciones = {
-        1: lambda: crear_carrera(),
-        2: lambda: actualizar_carrera(),
-        3: lambda: eliminar_carrera(),
-        4: lambda: mostrar_carreras()
+        1: crear_carrera,
+        2: actualizar_carrera,
+        3: eliminar_carrera,
+        4: mostrar_carreras
     }
     while True:
         opcion = utils.validar_numero(
