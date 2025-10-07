@@ -15,6 +15,10 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
+-- Crear base de datos
+CREATE DATABASE IF NOT EXISTS moha_haroon;
+USE moha_haroon;
+
 --
 -- Table structure for table `carrera`
 --
