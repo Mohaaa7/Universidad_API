@@ -1,3 +1,4 @@
+from Carreras import Carrera
 class DAOCarrera: 
     def  __init__(self, db):
         self.__db = db
@@ -27,5 +28,11 @@ class DAOCarrera:
         with self.__db.cursor() as cursor:
             sql = "SELECT * FROM carrera"
             cursor.execute(sql)
-            return cursor.fetchall()
+            return [Carrera(id,nombre) for id, nombre in cursor.fetchall()]
         
+    def get_carrera(self, carrera):
+        sql = "SELECT * FROM carrera where idcarrera = %s"
+        with self.__db.cursor() as cursor:
+            cursor.execute(sql, (carrera.get_id(),))
+            data  = cursor.fetchone()
+            return Carrera(*data) if data else None
